@@ -1,6 +1,8 @@
 
 /* TYPES */
 
+type IQueue = [Function, any[] | undefined][];
+
 type IOptions = {
   preflush?: Function,
   postflush?: Function,
@@ -9,4 +11,4 @@ type IOptions = {
 
 /* EXPORT */
 
-export {IOptions};
+export {IQueue, IOptions};

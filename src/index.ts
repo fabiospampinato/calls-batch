@@ -2,14 +2,14 @@
 /* IMPORT */
 
 import debounce = require ( 'lodash/debounce' );
-import {IOptions} from './types';
+import {IQueue, IOptions} from './types';
 
 /* CALLS BATCH */
 
 class CallsBatch {
 
   options: IOptions;
-  queue: [Function, any[] | undefined][] = [];
+  queue: IQueue = [];
   flushDebounced: Function;
 
   constructor ( options: IOptions ) {
@@ -25,6 +25,18 @@ class CallsBatch {
     this.queue.push ([ method, args ]);
 
     this.flushDebounced ();
+
+  }
+
+  get (): IQueue {
+
+    return this.queue;
+
+  }
+
+  set ( queue: IQueue ) {
+
+    this.queue = queue;
 
   }
 

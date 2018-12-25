@@ -42,13 +42,13 @@ class CallsBatch {
 
   async flush () {
 
-    const queue = this.queue;
-
-    this.queue = [];
-
     try {
 
       if ( this.options.preflush ) this.options.preflush ();
+
+      const queue = this.queue;
+
+      this.queue = [];
 
       for ( let [method, args] of queue ) {
 

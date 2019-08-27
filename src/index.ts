@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import debounce = require ( 'lodash/debounce' );
+import * as debounce from 'debounce';
 import {IQueue, IOptions} from './types';
 
 /* CALLS BATCH */

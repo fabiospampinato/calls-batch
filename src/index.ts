@@ -40,6 +40,16 @@ class CallsBatch {
 
   }
 
+  wrap<FN extends ( ...args: any ) => any> ( method: FN ) {
+
+    return ( ...args: Parameters<FN> ) => {
+
+      this.add ( method, args );
+
+    };
+
+  }
+
   async flush () {
 
     try {

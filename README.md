@@ -27,6 +27,10 @@ batch.add ( foo );
 batch.add ( foo, [1] );
 batch.add ( foo, [1, 2, 'foo'] );
 
+const fooWrapped = batch.wrap ( foo ); // Returns a function which automatically adds a call to `method`, with the provided arguments, to the batch whenver called
+
+fooWrapped ( 1 ); // Automatically add a call to `foo` with the provided arguments to the batch
+
 // batch.flush (); // Force a flush immediately
 ```
 
@@ -57,6 +61,10 @@ Get the current queue of calls.
 ### `batch.set ( queue ): void`
 
 Replace the current queue of calls with another.
+
+### `batch.wrap ( method: Function ): Function`
+
+Returns a function which automatically adds a call to `method`, with the provided arguments, to the batch whenever called.
 
 ### `batch.flush (): Promise<void>`
 

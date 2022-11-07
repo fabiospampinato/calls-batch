@@ -1,14 +1,18 @@
 
-/* TYPES */
+/* MAIN */
 
-type IQueue = [Function, any[] | undefined][];
+type Callback = () => void;
 
-type IOptions = {
-  preflush?: Function,
-  postflush?: Function,
+type FN<Args extends unknown[], Return extends unknown> = ( ...args: Args ) => Return;
+
+type Queue = [Function, unknown[]?][];
+
+type Options = {
+  preflush?: Callback,
+  postflush?: Callback,
   wait: number
 };
 
 /* EXPORT */
 
-export {IQueue, IOptions};
+export type {Callback, FN, Queue, Options};

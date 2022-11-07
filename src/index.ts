@@ -1,82 +1,77 @@
 
 /* IMPORT */
 
-import * as debounce from 'debounce';
-import {IQueue, IOptions} from './types';
+import debounce from 'debounce';
+import type {Callback, FN, Queue, Options} from './types';
 
-/* CALLS BATCH */
+/* MAIN */
 
 class CallsBatch {
 
-  options: IOptions;
-  queue: IQueue = [];
-  flushDebounced: Function;
+  /* VARIABLES */
 
-  constructor ( options: IOptions ) {
+  private queue: Queue = [];
+  private flushDebounced: Callback;
+  private preflush?: Callback;
+  private postflush?: Callback;
 
-    this.options = options;
+  /* CONSTRUCTOR */
 
-    this.flushDebounced = debounce ( this.flush, this.options.wait );
+  constructor ( options: Options ) {
 
-  }
-
-  add ( method: Function, args?: any[] ) {
-
-    this.queue.push ([ method, args ]);
-
-    this.flushDebounced ();
+    this.flushDebounced = debounce ( this.flush, options.wait );
+    this.preflush = options.preflush;
+    this.postflush = options.postflush;
 
   }
 
-  get (): IQueue {
+  /* API */
 
-    return this.queue;
-
-  }
-
-  set ( queue: IQueue ) {
-
-    this.queue = queue;
-
-  }
-
-  wrap<FN extends ( ...args: any ) => any> ( method: FN ) {
-
-    return ( ...args: Parameters<FN> ) => {
-
-      this.add ( method, args );
-
-    };
-
-  }
-
-  async flush () {
+  flush = async (): Promise<void> => {
 
     try {
 
-      if ( this.options.preflush ) this.options.preflush ();
+      this.preflush?.();
 
       const queue = this.queue;
 
       this.queue = [];
 
-      for ( let [method, args] of queue ) {
+      for ( const [method, args] of queue ) {
 
         await method.apply ( undefined, args );
 
       }
 
-      if ( this.options.postflush ) this.options.postflush ();
+      this.postflush?.();
 
-    } catch ( e ) {
+    } catch ( error: unknown ) {
 
-      if ( this.options.postflush ) this.options.postflush ();
+      this.postflush?.();
 
-      throw e;
+      throw error;
 
     }
 
-  }
+  };
+
+  add = <Args extends unknown[], Return extends unknown> ( method: FN<Args, Return>, args?: Args ): void => {
+
+    this.queue.push ([ method, args ]);
+
+    this.flushDebounced ();
+
+  };
+
+  wrap = <Args extends unknown[], Return extends unknown> ( method: FN<Args, Return> ): FN<Args, void> => {
+
+    return ( ...args: Args ): void => {
+
+      this.add ( method, args );
+
+    };
+
+  };
 
 }
 

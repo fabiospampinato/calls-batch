@@ -1,26 +1,19 @@
 {
   "name": "calls-batch",
+  "repository": "github:fabiospampinato/calls-batch",
   "description": "Execute calls in debounced batches, with pre/postflush hooks, useful for performance.",
   "version": "1.2.0",
+  "type": "module",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "clean": "rimraf dist",
-    "compile": "tsc --skipLibCheck && tstei",
-    "compile:watch": "tsc --skipLibCheck --watch",
-    "prepublishOnly": "npm run clean && npm run compile"
-  },
-  "bugs": {
-    "url": "https://github.com/fabiospampinato/calls-batch/issues"
-  },
-  "license": "MIT",
-  "author": {
-    "name": "Fabio Spampinato",
-    "email": "spampinabio@gmail.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/fabiospampinato/calls-batch.git"
+    "clean": "tsex clean",
+    "compile": "tsex compile",
+    "compile:watch": "tsex compile --watch",
+    "test": "tsex test",
+    "test:watch": "tsex test --watch",
+    "prepublishOnly": "npm run clean && npm run compile && npm run test"
   },
   "keywords": [
     "calls",
@@ -28,13 +21,12 @@
     "performance"
   ],
   "dependencies": {
-    "debounce": "^1.2.0"
+    "debounce": "^1.2.1"
   },
   "devDependencies": {
-    "@types/debounce": "^1.2.0",
-    "@types/node": "^10.9.4",
-    "rimraf": "^2.6.0",
-    "typescript": "^3.0.3",
-    "typescript-transform-export-interop": "^1.0.0"
+    "@types/debounce": "^1.2.1",
+    "fava": "^0.0.6",
+    "tsex": "^1.1.2",
+    "typescript": "^4.8.4"
   }
 }

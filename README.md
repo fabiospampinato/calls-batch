@@ -54,14 +54,6 @@ Add a function call to the batch, optionally passing an array of `args` that the
 
 The call will be executed in a debounced manner, that is, as soon as no other `batch.add` call is performend in the following `options.wait` milliseconds all the queued calls will be executed.
 
-### `batch.get (): queue`
-
-Get the current queue of calls.
-
-### `batch.set ( queue ): void`
-
-Replace the current queue of calls with another.
-
 ### `batch.wrap ( method: Function ): Function`
 
 Returns a function which automatically adds a call to `method`, with the provided arguments, to the batch whenever called.

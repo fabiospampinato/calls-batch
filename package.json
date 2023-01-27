@@ -21,10 +21,9 @@
     "performance"
   ],
   "dependencies": {
-    "debounce": "^1.2.1"
+    "dettle": "^1.0.0"
   },
   "devDependencies": {
-    "@types/debounce": "^1.2.1",
     "fava": "^0.0.6",
     "tsex": "^1.1.2",
     "typescript": "^4.8.4"

@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import debounce from 'debounce';
+import {debounce} from 'dettle';
 import type {Callback, FN, Queue, Options} from './types';
 
 /* MAIN */

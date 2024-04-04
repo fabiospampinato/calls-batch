@@ -78,3 +78,4 @@ class CallsBatch {
 /* EXPORT */
 
 export default CallsBatch;
+export type {Options};

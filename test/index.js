@@ -2,7 +2,6 @@
 /* IMPORT */
 
 import {describe} from 'fava';
-import {setTimeout as delay} from 'node:timers/promises';
 import CallsBatch from '../dist/index.js';
 
 /* MAIN */
@@ -31,7 +30,7 @@ describe ( 'CallsBatch', it => {
 
     t.is ( calls, '' );
 
-    await delay ( 100 );
+    await t.wait ( 100 );
 
     t.is ( calls, '[a12rst]' );
 

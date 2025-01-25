@@ -7,7 +7,7 @@ My initial use case for this was: I have a React application that will be re-ren
 ## Install
 
 ```sh
-npm install --save calls-batch
+npm install calls-batch
 ```
 
 ## Usage
@@ -15,52 +15,36 @@ npm install --save calls-batch
 ```ts
 import CallsBatch from 'calls-batch';
 
+// Let's create a new batch
+
 const batch = new CallsBatch ({
   preflush () {}, // Function to call before all the batched calls are executed
   postflush () {}, // Function to call before all the batched calls are executed
   wait: 100 // Debounce wait
-})
+});
+
+// Let's define a function to batch later on
 
 function foo () {}
+
+// Enqueuing some calls to "foo", with optional arguments
 
 batch.add ( foo );
 batch.add ( foo, [1] );
 batch.add ( foo, [1, 2, 'foo'] );
 
-const fooWrapped = batch.wrap ( foo ); // Returns a function which automatically adds a call to `method`, with the provided arguments, to the batch whenver called
+// Let's automatically make a batched version of "foo", which will automatically enqueue calls to "foo" with the provided arguments when called
 
-fooWrapped ( 1 ); // Automatically add a call to `foo` with the provided arguments to the batch
+const fooWrapped = batch.wrap ( foo );
 
-// batch.flush (); // Force a flush immediately
+// Let's automatically add a call to "foo" with the provided arguments to the batch
+
+fooWrapped ( 1 );
+
+// Let's force all the enqueued calls to happen immediately
+
+batch.flush ();
 ```
-
-## API
-
-### `new CallsBatch ( options )`
-
-Creates a new `CallsBatch` instance, the options object has the following shape:
-
-```ts
-{
-  preflush?: Function,
-  postflush?: Function,
-  wait: number
-}
-```
-
-### `batch.add ( method: Function, args?: any[] ): void`
-
-Add a function call to the batch, optionally passing an array of `args` that the passed `method` will be called with.
-
-The call will be executed in a debounced manner, that is, as soon as no other `batch.add` call is performend in the following `options.wait` milliseconds all the queued calls will be executed.
-
-### `batch.wrap ( method: Function ): Function`
-
-Returns a function which automatically adds a call to `method`, with the provided arguments, to the batch whenever called.
-
-### `batch.flush (): Promise<void>`
-
-Force flushing the batched calls immediately.
 
 ## License
 

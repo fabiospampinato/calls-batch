@@ -3,7 +3,7 @@
   "repository": "github:fabiospampinato/calls-batch",
   "description": "Execute calls in debounced batches, with pre/postflush hooks, useful for performance.",
   "license": "MIT",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "type": "module",
   "main": "dist/index.js",
   "exports": "./dist/index.js",
